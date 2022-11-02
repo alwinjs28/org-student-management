@@ -2,9 +2,12 @@ package com.example.myfirstproject.service;
 
 import com.example.myfirstproject.entity.Mark;
 
+import java.util.List;
+
 public interface MarkService {
-    public Integer getMark(Integer markId);
+    public Mark getMark(Integer markId);
     public Mark save(Mark mark);
     public Mark update(Mark mark);
-    public Mark delete(Mark mark);
+    public void delete(Mark mark);
+    public List<Mark> getAllMark();
 }
