@@ -12,7 +12,7 @@ public class MarkController {
     MarkService markService;
 
     @RequestMapping(value = "/g_mark",method = RequestMethod.GET)
-    public Mark getMark(@RequestParam("id")Integer markId){
+    public Mark getMark(@RequestParam("id")Long markId){
         return markService.getMark(markId);
     }
     @RequestMapping(value = "/s_mark",method = RequestMethod.POST)
@@ -26,5 +26,9 @@ public class MarkController {
     @RequestMapping(value = "/d_mark",method = RequestMethod.DELETE)
     public void delete(@RequestBody Mark mark){
         markService.delete(mark);
+    }
+    @RequestMapping(value = "/noOfStudentPass",method = RequestMethod.GET)
+    public Integer getTotalNumberOfStudentsPassed(@RequestParam("id")Long examTypeId){
+        return markService.getTotalNumberOfStudentsPassed(examTypeId);
     }
 }
