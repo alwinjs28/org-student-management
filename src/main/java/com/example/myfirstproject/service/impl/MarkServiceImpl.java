@@ -1,5 +1,6 @@
 package com.example.myfirstproject.service.impl;
 
+import com.example.myfirstproject.dto.ResultDto;
 import com.example.myfirstproject.entity.ExamType;
 import com.example.myfirstproject.entity.Mark;
 import com.example.myfirstproject.repository.ExamTypeRepository;
@@ -8,6 +9,7 @@ import com.example.myfirstproject.service.MarkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.transform.Result;
 import java.util.List;
 
 @Service
@@ -29,7 +31,7 @@ public class MarkServiceImpl implements MarkService {
         markRepository.delete(mark);
     }
     public Integer getTotalNumberOfStudentsPassed(Long examTypeId){
-       List<Mark> marks = markRepository.getTotalNumberOfStudentsPassed(examTypeId);
+       List<Mark> marks = markRepository.getMarksByExamTypeId(examTypeId);
         ExamType examType = examTypeRepository.getExamType(examTypeId);
        Integer count=0;
        for (int i=0;i<marks.size();i++){
@@ -48,5 +50,16 @@ public class MarkServiceImpl implements MarkService {
            }
        }
        return count;
+    }
+    public ResultDto getExamResult(Long examTypeId){
+        List<Mark> marks = markRepository.getMarksByExamTypeId(examTypeId);
+       Integer noOfStudentsPassed = getTotalNumberOfStudentsPassed(examTypeId);
+       Integer noOfStudentFailed = marks.size()-noOfStudentsPassed;
+
+        ResultDto resultDto = new ResultDto();
+        resultDto.setStudentFailed(noOfStudentFailed);
+        resultDto.setStudentPassed(noOfStudentsPassed);
+
+        return resultDto;
     }
 }
