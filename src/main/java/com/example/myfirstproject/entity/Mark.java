@@ -21,8 +21,8 @@ public class Mark {
     private Integer scienceMark;
     @Column(name = "social_science_mark")
     private Integer socialScienceMark;
-    @Column(name = "exam_type")
-    private Long examType;
+    @Column(name = "exam_type_id")
+    private Long examTypeId;
 
     public Long getMarkId() {
         return markId;
@@ -80,11 +80,11 @@ public class Mark {
         this.socialScienceMark = socialScienceMark;
     }
 
-    public Long getExamType() {
-        return examType;
+    public Long getExamTypeId() {
+        return examTypeId;
     }
 
-    public void setExamType(Long examType) {
-        this.examType = examType;
+    public void setExamTypeId(Long examTypeId) {
+        this.examTypeId = examTypeId;
     }
 }
