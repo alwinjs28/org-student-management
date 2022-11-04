@@ -1,5 +1,6 @@
 package com.example.myfirstproject.controller;
 
+import com.example.myfirstproject.dto.ResultDto;
 import com.example.myfirstproject.entity.Mark;
 import com.example.myfirstproject.service.MarkService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +31,9 @@ public class MarkController {
     @RequestMapping(value = "/noOfStudentPass",method = RequestMethod.GET)
     public Integer getTotalNumberOfStudentsPassed(@RequestParam("id")Long examTypeId){
         return markService.getTotalNumberOfStudentsPassed(examTypeId);
+    }
+    @RequestMapping(value = "/pass-fail-students-count",method = RequestMethod.GET)
+    public ResultDto getPassFailStudentsCount(@RequestParam("id")Long examTypeId){
+        return markService.getExamResult(examTypeId);
     }
 }
