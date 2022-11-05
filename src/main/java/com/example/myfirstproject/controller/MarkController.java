@@ -36,4 +36,8 @@ public class MarkController {
     public ResultDto getPassFailStudentsCount(@RequestParam("id")Long examTypeId){
         return markService.getExamResult(examTypeId);
     }
+    @RequestMapping(value = "/highest_mark",method = RequestMethod.GET)
+    public Integer getHighestMark(@RequestParam("id") Long examTypeId){
+        return markService.getHighestMark(examTypeId);
+    }
 }

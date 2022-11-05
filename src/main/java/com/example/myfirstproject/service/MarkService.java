@@ -1,5 +1,6 @@
 package com.example.myfirstproject.service;
 
+import com.example.myfirstproject.dto.HighestMarkDto;
 import com.example.myfirstproject.dto.ResultDto;
 import com.example.myfirstproject.entity.Mark;
 
@@ -13,4 +14,6 @@ public interface MarkService {
     public void delete(Mark mark);
     public Integer getTotalNumberOfStudentsPassed(Long examTypeId);
     public ResultDto getExamResult(Long examTypeId);
+    public Integer getHighestMark(Long examTypeId);
+    public HighestMarkDto getHighestMarkInAllSubject(Long examTypeId);
 }
