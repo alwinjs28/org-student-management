@@ -15,7 +15,7 @@ import javax.xml.transform.Result;
 import java.util.List;
 
 @Service
-public class MarkServiceImpl implements MarkService {
+public class  MarkServiceImpl implements MarkService {
     @Autowired
     ExamTypeRepository examTypeRepository;
     @Autowired
@@ -67,7 +67,7 @@ public class MarkServiceImpl implements MarkService {
     public Integer getHighestMark(Long examTypeId){
         List<Mark> marks = markRepository.getMarksByExamTypeId(examTypeId);
         ExamType examType = examTypeRepository.getExamType(examTypeId);
-        Integer highestTotal = 100;
+        Integer highestTotal = 0;
         for (int i=0;i<marks.size();i++){
             Mark mark = marks.get(i);
 
@@ -90,7 +90,8 @@ public class MarkServiceImpl implements MarkService {
     }
     public HighestMarkDto getHighestMarkInAllSubject(Long examTypeId){
         List<Mark> marks = markRepository.getMarksByExamTypeId(examTypeId);
-
+        HighestMarkDto highestMarkDto = new HighestMarkDto();
+        Integer highMark = 0;
         for (int i=0;i<marks.size();i++){
             Mark mark = marks.get(i);
 
@@ -99,7 +100,15 @@ public class MarkServiceImpl implements MarkService {
             Integer maths = mark.getMathsMark();
             Integer science = mark.getScienceMark();
             Integer socialScience = mark.getSocialScienceMark();
-
+            if(tamil>highMark && english>highMark && maths>highMark && science>highMark && socialScience>highMark){
+                highestMarkDto.setTamil(tamil);
+               // highestMarkDto.setEnglish(english);
+               // highestMarkDto.setMaths(maths);
+               // highestMarkDto.setScience(science);
+               // highestMarkDto.setSocialScience(socialScience);
+           }
         }
+
+        return highestMarkDto;
     }
 }
