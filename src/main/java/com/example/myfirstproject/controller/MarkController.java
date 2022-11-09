@@ -1,6 +1,6 @@
 package com.example.myfirstproject.controller;
 
-import com.example.myfirstproject.dto.HighestMarkDto;
+import com.example.myfirstproject.dto.SubjectMarksDto;
 import com.example.myfirstproject.dto.ResultDto;
 import com.example.myfirstproject.entity.Mark;
 import com.example.myfirstproject.service.MarkService;
@@ -42,7 +42,11 @@ public class MarkController {
         return markService.getHighestMark(examTypeId);
     }
     @RequestMapping(value = "/highest_mark_in_each_subject",method = RequestMethod.GET)
-    public HighestMarkDto getHighMarkInEachSubject(@RequestParam("exam_Type_id")Long examTypeId){
+    public SubjectMarksDto getHighMarkInEachSubject(@RequestParam("exam_Type_id")Long examTypeId){
         return markService.getHighestMarkInAllSubject(examTypeId);
+    }
+    @RequestMapping(value = "/low_mark_for_each_subject",method = RequestMethod.GET)
+    public SubjectMarksDto getLowMarkInEachSubject(@RequestParam("exam_type_id")Long examTypeId){
+        return markService.getLowestMarkInEachSubject(examTypeId);
     }
 }

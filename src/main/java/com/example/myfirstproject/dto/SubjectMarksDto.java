@@ -2,7 +2,7 @@ package com.example.myfirstproject.dto;
 
 import java.io.Serializable;
 
-public class HighestMarkDto implements Serializable {
+public class SubjectMarksDto implements Serializable {
     private Integer tamil;
     private Integer english;
     private Integer maths;
