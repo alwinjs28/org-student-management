@@ -1,6 +1,7 @@
 package com.example.myfirstproject;
 
 import com.example.myfirstproject.controller.MarkController;
+import com.example.myfirstproject.dto.MarksAndStudentDto;
 import com.example.myfirstproject.dto.SubjectMarksDto;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -24,5 +25,12 @@ class MyfirstprojectApplicationTests {
 		SubjectMarksDto highestMarkDto = markController.getHighMarkInEachSubject(examTypeId);
 		String response = highestMarkDto.toString();
 		log.info("This is tamil case output: " + highestMarkDto.getTamil());
+	}
+	@Test
+	public void testGetHighestMarkAndStudent(){
+		Long examTypeId = 1L;
+		MarksAndStudentDto marksAndStudentDto = markController.getHighestMarkAndStudentName(examTypeId);
+		String response = marksAndStudentDto.toString();
+		log.info("This is out Put:"+marksAndStudentDto.getTamil());
 	}
 }

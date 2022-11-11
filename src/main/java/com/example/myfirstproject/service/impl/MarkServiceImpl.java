@@ -1,17 +1,22 @@
 package com.example.myfirstproject.service.impl;
 
+import com.example.myfirstproject.dto.MarksAndStudentDto;
 import com.example.myfirstproject.dto.SubjectMarksDto;
 import com.example.myfirstproject.dto.ResultDto;
 import com.example.myfirstproject.entity.ExamType;
 import com.example.myfirstproject.entity.Mark;
+import com.example.myfirstproject.entity.Student;
 import com.example.myfirstproject.repository.ExamTypeRepository;
 import com.example.myfirstproject.repository.MarkRepository;
+import com.example.myfirstproject.repository.StudentRepository;
 import com.example.myfirstproject.service.MarkService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -20,6 +25,8 @@ public class  MarkServiceImpl implements MarkService {
     ExamTypeRepository examTypeRepository;
     @Autowired
     MarkRepository markRepository;
+    @Autowired
+    StudentRepository studentRepository;
     public Mark getMark (Long markId){
         return markRepository.getMark(markId);
     }
@@ -170,5 +177,107 @@ public class  MarkServiceImpl implements MarkService {
             }
         }
         return subjectMarksDto;
+    }
+    public MarksAndStudentDto getHighestMarkAndStudentName(Long examTypeId) {
+        List<Mark> marks = markRepository.getMarksByExamTypeId(examTypeId);
+        MarksAndStudentDto marksAndStudentDto = new MarksAndStudentDto();
+
+            Integer highMarkTamil = 0;
+            Integer highMarkEnglish = 0;
+            Integer highMarkMaths = 0;
+            Integer highMarkScience = 0;
+            Integer highMarkSocialScience = 0;
+            for (int i = 0; i < marks.size(); i++) {
+                Mark mark = marks.get(i);
+                Integer tamil = mark.getTamilMark();
+                Long studentId = mark.getStudentId();
+                if (tamil > highMarkTamil) {
+                    highMarkTamil = tamil;
+                    Map<String,String> tamilMap = new HashMap<>();
+                    String tamilMark = String.valueOf(tamil);
+                    tamilMap.put("tamilMark", tamilMark);
+                    String studentStringId = String.valueOf(studentId);
+                    tamilMap.put("studentId", studentStringId);
+
+                    Integer studentIntegerId = Integer.parseInt(studentStringId);
+
+                    //Integer sId = studentId.intValue();
+                    Student student = studentRepository.getStudent(studentIntegerId);
+                    String name = student.getStudentName();
+
+                    tamilMap.put("studentName", name);
+                    marksAndStudentDto.setTamil(tamilMap);
+                }
+
+                Integer english = mark.getEnglishMark();
+                if (english > highMarkEnglish) {
+                    highMarkEnglish = english;
+                    Map<String,String> englishMap = new HashMap<>();
+                    String englishMark = String.valueOf(english);
+                    englishMap.put("englishMark", englishMark);
+                    String studentStringId = String.valueOf(studentId);
+                    englishMap.put("studentId", studentStringId);
+
+                    Integer studentIntegerId = Integer.parseInt(studentStringId);
+
+                    Student student = studentRepository.getStudent(studentIntegerId);
+                    String name = student.getStudentName();
+
+                    englishMap.put("studentName", name);
+                    marksAndStudentDto.setEnglish(englishMap);
+                }
+                Integer maths = mark.getMathsMark();
+                if(maths > highMarkMaths){
+                    highMarkMaths = maths;
+                    Map<String,String> mathsMap = new HashMap<>();
+                    String mathsMark = String.valueOf(maths);
+                    mathsMap.put("mathsMark",mathsMark);
+                    String studentStringId = String.valueOf(studentId);
+                    mathsMap.put("studentId",studentStringId);
+
+                    Integer studentIntegerId = Integer.parseInt(studentStringId);
+
+                    Student student = studentRepository.getStudent(studentIntegerId);
+                    String name = student.getStudentName();
+                    mathsMap.put("studentName",name);
+                    marksAndStudentDto.setMaths(mathsMap);
+                }
+                Integer science = mark.getScienceMark();
+                if(science > highMarkScience){
+                    highMarkScience = science;
+                    Map<String,String> scienceMap = new HashMap<>();
+                    String scienceMark = String.valueOf(science);
+                    scienceMap.put("scienceMark",scienceMark);
+                    String studentStringId = String.valueOf(studentId);
+                    scienceMap.put("studentId",studentStringId);
+
+                    Integer studentIntegerId = Integer.parseInt(studentStringId);
+
+                    Student student = studentRepository.getStudent(studentIntegerId);
+                    String name = student.getStudentName();
+                    scienceMap.put("studentName",name);
+                    marksAndStudentDto.setScience(scienceMap);
+                }
+                Integer socialScience = mark.getSocialScienceMark();
+                if(socialScience > highMarkSocialScience) {
+                    highMarkSocialScience = socialScience;
+                    Map<String, String> socialScienceMap = new HashMap<>();
+                    String socialScienceMark = String.valueOf(socialScience);
+                    socialScienceMap.put("socialScienceMark", socialScienceMark);
+                    String studentStringId = String.valueOf(studentId);
+                    socialScienceMap.put("studentId", studentStringId);
+
+                    Integer studentIntegerId = Integer.parseInt(studentStringId);
+
+                    Student student = studentRepository.getStudent(studentIntegerId);
+                    String name = student.getStudentName();
+                    socialScienceMap.put("studentName", name);
+                    marksAndStudentDto.setSocialScience(socialScienceMap);
+                }
+
+            }
+
+
+        return marksAndStudentDto;
     }
 }
