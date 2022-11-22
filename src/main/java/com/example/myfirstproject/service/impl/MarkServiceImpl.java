@@ -1,6 +1,7 @@
 package com.example.myfirstproject.service.impl;
 
 import com.example.myfirstproject.dto.MarksAndStudentDto;
+import com.example.myfirstproject.dto.StudentReportDto;
 import com.example.myfirstproject.dto.SubjectMarksDto;
 import com.example.myfirstproject.dto.ResultDto;
 import com.example.myfirstproject.entity.ExamType;
@@ -279,5 +280,40 @@ public class  MarkServiceImpl implements MarkService {
 
 
         return marksAndStudentDto;
+    }
+
+    public StudentReportDto getStudentDetailsWithPercentage(Long examTypeId){
+        List<Mark> marks = markRepository.getMarksByExamTypeId(examTypeId);
+
+        StudentReportDto studentReportDto = new StudentReportDto();
+        for (int i=0;i<marks.size();i++){
+            Mark mark = marks.get(i);
+            Integer tamil = mark.getTamilMark();
+            Integer english = mark.getEnglishMark();
+            Integer maths = mark.getMathsMark();
+            Integer science = mark.getScienceMark();
+            Integer socialScience = mark.getSocialScienceMark();
+
+            Integer total = tamil+english+maths+science+socialScience;
+
+            float b = total.floatValue();
+            Float percentage = (b/500)*100;
+
+            Long studentId = mark.getStudentId();
+            Integer studentIntegerId = studentId.intValue();
+
+            Student student = studentRepository.getStudent(studentIntegerId);
+            String name = student.getStudentName();
+
+            ExamType examType = examTypeRepository.getExamType(examTypeId);
+            Integer passMark = examType.getPassMark();
+
+            studentReportDto.setPercentage(percentage);
+            studentReportDto.setStudentId(studentIntegerId);
+            studentReportDto.setStudentName(name);
+            studentReportDto.setTotal(total);
+
+        }
+        return studentReportDto;
     }
 }

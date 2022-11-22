@@ -61,6 +61,7 @@ public class StudentServiceImpl implements StudentService {
                 details.put("bloodGroup", bloodGroup);
                 result.add(details);
             }
+
         }
         return result;
     }

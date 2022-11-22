@@ -1,6 +1,7 @@
 package com.example.myfirstproject.controller;
 
 import com.example.myfirstproject.dto.MarksAndStudentDto;
+import com.example.myfirstproject.dto.StudentReportDto;
 import com.example.myfirstproject.dto.SubjectMarksDto;
 import com.example.myfirstproject.dto.ResultDto;
 import com.example.myfirstproject.entity.Mark;
@@ -63,5 +64,9 @@ public class MarkController {
     @ResponseBody
     public MarksAndStudentDto getHighestMarkAndStudentName(@RequestParam("exam_type_id") Long examTypeId){
         return markService.getHighestMarkAndStudentName(examTypeId);
+    }
+    @RequestMapping(value = "/student_details_with_percentage_above_input",method = RequestMethod.GET)
+    public StudentReportDto getStudentDetailsWithPercentageAboveInput(@RequestParam("exam_type_id")Long examTypeId){
+        return markService.getStudentDetailsWithPercentage(examTypeId);
     }
 }
